@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>研发进度</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+            min-height: 100vh;
+            padding: 60px 80px;
+        }
+        
+        .slide-title {
+            font-size: 42px;
+            color: #2d3436;
+            margin-bottom: 50px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid #667eea;
+            display: inline-block;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 35px;
+            padding-left: 30px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -25px;
+            top: 8px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #667eea;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #667eea;
+        }
+        
+        .timeline-item.completed::before {
+            background: #00b894;
+            box-shadow: 0 0 0 3px #00b894;
+        }
+        
+        .timeline-item.in-progress::before {
+            background: #fdcb6e;
+            box-shadow: 0 0 0 3px #fdcb6e;
+        }
+        
+        .timeline-title {
+            font-size: 20px;
+            color: #2d3436;
+            margin-bottom: 8px;
+        }
+        
+        .timeline-status {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .status-completed {
+            background: #00b894;
+            color: white;
+        }
+        
+        .status-in-progress {
+            background: #fdcb6e;
+            color: #2d3436;
+        }
+        
+        .status-planned {
+            background: #dfe6e9;
+            color: #636e72;
+        }
+        
+        .timeline-desc {
+            color: #636e72;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="slide-title">研发进度</h1>
+    
+    <div class="timeline">
+        <div class="timeline-item completed">
+            <h3 class="timeline-title">需求分析与架构设计</h3>
+            <span class="timeline-status status-completed">已完成</span>
+            <p class="timeline-desc">完成产品需求文档，确定技术架构方案</p>
+        </div>
+        
+        <div class="timeline-item completed">
+            <h3 class="timeline-title">基础框架搭建</h3>
+            <span class="timeline-status status-completed">已完成</span>
+            <p class="timeline-desc">前后端框架搭建，数据库设计，基础组件开发</p>
+        </div>
+        
+        <div class="timeline-item in-progress">
+            <h3 class="timeline-title">核心功能开发</h3>
+            <span class="timeline-status status-in-progress">进行中</span>
+            <p class="timeline-desc">GIS地图集成、工程数据管理、空间分析功能</p>
+        </div>
+        
+        <div class="timeline-item">
+            <h3 class="timeline-title">测试与优化</h3>
+            <span class="timeline-status status-planned">计划中</span>
+            <p class="timeline-desc">系统测试、性能优化、用户验收</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后续规划</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+            min-height: 100vh;
+            padding: 60px 80px;
+        }
+        
+        .slide-title {
+            font-size: 42px;
+            color: #2d3436;
+            margin-bottom: 50px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid #667eea;
+            display: inline-block;
+        }
+        
+        .roadmap {
+            display: flex;
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .phase {
+            flex: 1;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .phase-header {
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+        
+        .phase:nth-child(1) .phase-header { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .phase:nth-child(2) .phase-header { background: linear-gradient(135deg, #00b894, #00cec9); }
+        .phase:nth-child(3) .phase-header { background: linear-gradient(135deg, #fd79a8, #e84393); }
+        
+        .phase-title {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .phase-date {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .phase-content {
+            padding: 25px;
+        }
+        
+        .phase-content ul {
+            list-style: none;
+        }
+        
+        .phase-content li {
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #636e72;
+        }
+        
+        .phase-content li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .summary-box {
+            margin-top: 50px;
+            padding: 30px;
+            background: linear-gradient(135deg, #2d3436 0%, #636e72 100%);
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+        }
+        
+        .summary-box h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .summary-box p {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="slide-title">后续规划</h1>
+    
+    <div class="roadmap">
+        <div class="phase">
+            <div class="phase-header">
+                <h3 class="phase-title">阶段一</h3>
+                <p class="phase-date">Q3 2026</p>
+            </div>
+            <div class="phase-content">
+                <ul>
+                    <li>完成核心功能开发</li>
+                    <li>系统集成测试</li>
+                    <li>内部试用反馈</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="phase">
+            <div class="phase-header">
+                <h3 class="phase-title">阶段二</h3>
+                <p class="phase-date">Q4 2026</p>
+            </div>
+            <div class="phase-content">
+                <ul>
+                    <li>功能优化迭代</li>
+                    <li>性能调优</li>
+                    <li>首批用户上线</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="phase">
+            <div class="phase-header">
+                <h3 class="phase-title">阶段三</h3>
+                <p class="phase-date">2027</p>
+            </div>
+            <div class="phase-content">
+                <ul>
+                    <li>功能扩展升级</li>
+                    <li>大规模推广</li>
+                    <li>生态建设</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="summary-box">
+        <h3>感谢关注</h3>
+        <p>EGIP - 赋能工程地理一体化，助力数字化转型升级</p>
+    </div>
+</body>
+</html>

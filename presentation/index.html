@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EGIP 产品研发进度汇报</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- 导航栏 -->
+        <nav class="slide-nav">
+            <button id="prevBtn" class="nav-btn" onclick="prevSlide()">◀ 上一页</button>
+            <span id="slideCounter" class="slide-counter">1 / 4</span>
+            <button id="nextBtn" class="nav-btn" onclick="nextSlide()">下一页 ▶</button>
+        </nav>
+        
+        <!-- 幻灯片容器 -->
+        <main class="slide-frame">
+            <iframe id="slideContent" src="slides/01-title.html" frameborder="0"></iframe>
+        </main>
+        
+        <!-- 页面导航点 -->
+        <div class="slide-dots" id="slideDots"></div>
+    </div>
+
+    <script>
+        const slides = [
+            'slides/01-title.html',
+            'slides/02-overview.html',
+            'slides/03-progress.html',
+            'slides/04-roadmap.html'
+        ];
+        
+        let currentIndex = 0;
+        
+        function loadSlide(index) {
+            if (index < 0 || index >= slides.length) return;
+            currentIndex = index;
+            document.getElementById('slideContent').src = slides[index];
+            updateUI();
+        }
+        
+        function nextSlide() {
+            if (currentIndex < slides.length - 1) {
+                loadSlide(currentIndex + 1);
+            }
+        }
+        
+        function prevSlide() {
+            if (currentIndex > 0) {
+                loadSlide(currentIndex - 1);
+            }
+        }
+        
+        function updateUI() {
+            document.getElementById('slideCounter').textContent = 
+                `${currentIndex + 1} / ${slides.length}`;
+            
+            document.getElementById('prevBtn').disabled = currentIndex === 0;
+            document.getElementById('nextBtn').disabled = currentIndex === slides.length - 1;
+            
+            // 更新导航点
+            document.querySelectorAll('.dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
+            });
+        }
+        
+        function createDots() {
+            const container = document.getElementById('slideDots');
+            slides.forEach((_, i) => {
+                const dot = document.createElement('span');
+                dot.className = 'dot' + (i === 0 ? ' active' : '');
+                dot.onclick = () => loadSlide(i);
+                container.appendChild(dot);
+            });
+        }
+        
+        // 键盘导航
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+        
+        createDots();
+        updateUI();
+    </script>
+</body>
+</html>

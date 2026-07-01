@@ -1,0 +1,102 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+    background: #1a1a2e;
+    color: #333;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* 演示容器 */
+.presentation-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* 导航栏 */
+.slide-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+    gap: 20px;
+    flex-shrink: 0;
+}
+
+.nav-btn {
+    padding: 8px 20px;
+    background: #e94560;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover:not(:disabled) {
+    background: #ff6b6b;
+    transform: translateY(-1px);
+}
+
+.nav-btn:disabled {
+    background: #4a4a6a;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.slide-counter {
+    color: #fff;
+    font-size: 16px;
+    min-width: 60px;
+    text-align: center;
+}
+
+/* 幻灯片框架 */
+.slide-frame {
+    flex: 1;
+    position: relative;
+    background: #f5f5f5;
+}
+
+.slide-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* 导航点 */
+.slide-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px;
+    background: #16213e;
+    flex-shrink: 0;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #4a4a6a;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot:hover {
+    background: #e94560;
+}
+
+.dot.active {
+    background: #e94560;
+    transform: scale(1.2);
+}
