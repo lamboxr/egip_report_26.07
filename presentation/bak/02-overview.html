@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品概述</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+            min-height: 100vh;
+            padding: 60px 80px;
+        }
+        
+        .slide-title {
+            font-size: 42px;
+            color: #2d3436;
+            margin-bottom: 50px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid #667eea;
+            display: inline-block;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        .card h3 {
+            font-size: 22px;
+            color: #2d3436;
+            margin-bottom: 12px;
+        }
+        
+        .card p {
+            color: #636e72;
+            line-height: 1.6;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .highlight h3, .highlight p {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="slide-title">产品概述</h1>
+    
+    <div class="content-grid">
+        <div class="card highlight">
+            <div class="card-icon">🎯</div>
+            <h3>产品定位</h3>
+            <p>工程地理一体化平台，集成工程数据与地理信息，提供可视化分析能力</p>
+        </div>
+        
+        <div class="card">
+            <div class="card-icon">👥</div>
+            <h3>目标用户</h3>
+            <p>工程建设单位、规划设计院、政府管理部门</p>
+        </div>
+        
+        <div class="card">
+            <div class="card-icon">🔧</div>
+            <h3>核心功能</h3>
+            <p>工程数据管理、GIS可视化、空间分析、报表生成</p>
+        </div>
+        
+        <div class="card">
+            <div class="card-icon">💡</div>
+            <h3>核心价值</h3>
+            <p>提升工程管理效率，降低数据整合成本，支持科学决策</p>
+        </div>
+    </div>
+</body>
+</html>
