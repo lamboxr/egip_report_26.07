@@ -8,12 +8,7 @@
 </head>
 <body>
     <div class="presentation-container">
-        <!-- 导航栏 -->
-        <nav class="slide-nav">
-            <button id="prevBtn" class="nav-btn" onclick="prevSlide()">◀ 上一页</button>
-            <span id="slideCounter" class="slide-counter">1 / 4</span>
-            <button id="nextBtn" class="nav-btn" onclick="nextSlide()">下一页 ▶</button>
-        </nav>
+
         
         <!-- 幻灯片容器 -->
         <main class="slide-frame">
@@ -21,7 +16,13 @@
         </main>
         
         <!-- 页面导航点 -->
-        <div class="slide-dots" id="slideDots"></div>
+        <!-- <div class="slide-dots" id="slideDots"></div> -->
+        <!-- 导航栏 -->
+        <nav class="slide-nav">
+            <button id="prevBtn" class="nav-btn" onclick="prevSlide()">◀</button>
+            <span id="slideCounter" class="slide-counter">1 / 4</span>
+            <button id="nextBtn" class="nav-btn" onclick="nextSlide()">▶</button>
+        </nav>
     </div>
 
     <script>
