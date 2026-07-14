@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多用户支持</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+            min-height: 100vh;
+            padding: 40px 60px;
+        }
+        
+        .slide-title {
+            font-size: 42px;
+            color: #2d3436;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid #667eea;
+            display: inline-block;
+        }
+        
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .version-box {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .version-box.before {
+            border-top: 5px solid #f8c9c3;
+        }
+        
+        .version-box.after {
+            border-top: 5px solid #a8d8bb;
+        }
+        
+        .version-label {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2d3436;
+            color: white;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .version-box.before .version-label {
+            background: #f8c9c3;
+            color: #b85450;
+        }
+        
+        .version-box.after .version-label {
+            background: #a8d8bb;
+            color: #82b366;
+        }
+        
+        .user-flow {
+            margin-top: 25px;
+        }
+        
+        .user-box {
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 500;
+            font-size: 18px;
+        }
+        
+        .user-box.nmos {
+            background: #e3f2fd;
+            border: 2px solid #64b5f6;
+            color: #1565c0;
+        }
+        
+        .user-box.fddp {
+            background: #e8f5e9;
+            border: 2px solid #81c784;
+            color: #2e7d32;
+        }
+        
+        .user-box.adaptor {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 15px;
+        }
+        
+        .user-box.adaptor.completed {
+            background: #f0f7eb;
+            border: 2px solid #82b366;
+            color: #2d3436;
+        }
+        
+        .user-box.adaptor.planned {
+            background: #fff0f0;
+            border: 2px dashed #b85450;
+            color: #2d3436;
+        }
+        
+        .user-box.core {
+            background: #fffde7;
+            border: 3px solid #f9a825;
+            color: #2d3436;
+            font-weight: bold;
+        }
+        
+        .flow-line {
+            display: flex;
+            justify-content: center;
+            margin: 8px 0;
+            position: relative;
+        }
+        
+        .flow-arrow {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .flow-label {
+            position: absolute;
+            top: -10px;
+            color: #636e72;
+            font-size: 12px;
+            background: white;
+            padding: 0 8px;
+            white-space: nowrap;
+        }
+        
+        .connection-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+            color: #667eea;
+        }
+        
+        .connection-label {
+            margin: 0 15px;
+            font-size: 14px;
+            color: #636e72;
+        }
+        
+        .connection-line {
+            flex: 1;
+            height: 2px;
+            background: #ccc;
+        }
+        
+        .legend {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+        }
+        
+        .legend-color.nmos {
+            background: #64b5f6;
+        }
+        
+        .legend-color.fddp {
+            background: #81c784;
+        }
+        
+        .legend-color.core {
+            background: #f9a825;
+        }
+        
+        .legend-color.completed {
+            background: #82b366;
+        }
+        
+        .legend-color.planned {
+            background: #b85450;
+        }
+        
+        .benefits-section {
+            margin-top: 30px;
+            background: #f0f7eb;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #82b366;
+        }
+        
+        .benefits-section h3 {
+            color: #2d3436;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .benefit-item {
+            margin-bottom: 10px;
+            color: #636e72;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .benefit-item::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #82b366;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="slide-title">多用户支持</h1>
+    
+    <div class="comparison-container">
+        <div class="version-box before">
+            <div class="version-label">V2版本</div>
+            <h3 style="margin-top: 25px; color: #2d3436; text-align: center;">单一用户源</h3>
+            
+            <div class="user-flow">
+                <div class="user-box nmos">NMOSP系统用户</div>
+                
+                <div class="flow-line">
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-label">登录、同步</div>
+                </div>
+                
+                <div class="connection-box">
+                    <div class="connection-line"></div>
+                    <div class="connection-label">直接对接</div>
+                    <div class="connection-line"></div>
+                </div>
+                
+                <div class="user-box core">EGIP系统</div>
+            </div>
+            
+            <div style="margin-top: 25px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                <p style="color: #636e72; font-size: 14px; text-align: center;">
+                    <strong>用户支持范围：</strong>仅支持NMOSP系统用户<br>
+                    <strong>扩展性：</strong>难以支持其他系统的用户接入
+                </p>
+            </div>
+        </div>
+        
+        <div class="version-box after">
+            <div class="version-label">V3版本</div>
+            <h3 style="margin-top: 25px; color: #2d3436; text-align: center;">多用户源适配</h3>
+            
+            <div class="user-flow">
+                <!-- NMOSP 用户流程 -->
+                <div class="user-box nmos">NMOSP系统用户</div>
+                
+                <div class="flow-line">
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-label">登录、同步</div>
+                </div>
+                
+                <div class="user-box adaptor planned">NMOSP用户适配微服务<br/>待开发</div>
+                
+                <div class="flow-line" style="margin-bottom: 20px;">
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-label">登录</div>
+                </div>
+                
+                <!-- FDDP 用户流程 -->
+                <div class="user-box fddp">FDDP系统用户</div>
+                
+                <div class="flow-line">
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-label">登录、同步</div>
+                </div>
+                
+                <div class="user-box adaptor completed">FDDP用户适配微服务</div>
+                
+                <div class="flow-line" style="margin-bottom: 20px;">
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-label">登录</div>
+                </div>
+                
+                <!-- 统一接入点 -->
+                <div class="connection-box">
+                    <div class="connection-line"></div>
+                    <div class="connection-label">统一接入</div>
+                    <div class="connection-line"></div>
+                </div>
+                
+                <div class="user-box core">EGIP系统</div>
+            </div>
+            
+            <div style="margin-top: 25px; padding: 15px; background: #e8f5e9; border-radius: 8px; border-left: 4px solid #4caf50;">
+                <p style="color: #636e72; font-size: 14px; text-align: center;">
+                    <strong>已支持：</strong>FDDP系统用户<br>
+                    <strong>待扩展：</strong>NMOSP系统用户<br>
+                    <strong>可扩展性：</strong>支持更多系统用户接入
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color nmos"></div>
+            <span>NMOSP系统用户</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color fddp"></div>
+            <span>FDDP系统用户</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color core"></div>
+            <span>核心系统</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color completed"></div>
+            <span>已完成适配器</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color planned"></div>
+            <span>待开发适配器</span>
+        </div>
+    </div>
+    
+    <div class="benefits-section">
+        <h3>多用户支持的价值</h3>
+        <div class="benefit-item">降低系统切换成本，用户可沿用原有系统账号</div>
+        <div class="benefit-item">提高数据同步效率，减少数据迁移工作量</div>
+        <div class="benefit-item">支持混合部署环境，不同系统用户可以同时使用</div>
+        <div class="benefit-item">可扩展性强，未来可快速接入更多系统的用户</div>
+        <div class="benefit-item">统一身份管理，简化系统运维复杂度</div>
+    </div>
+</body>
+</html>

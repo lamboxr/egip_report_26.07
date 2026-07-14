@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多场景支持</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+            min-height: 100vh;
+            padding: 40px 60px;
+        }
+        
+        .slide-title {
+            font-size: 42px;
+            color: #2d3436;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid #667eea;
+            display: inline-block;
+        }
+        
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .version-box {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .version-box.before {
+            border-top: 5px solid #f8c9c3;
+        }
+        
+        .version-box.after {
+            border-top: 5px solid #a8d8bb;
+        }
+        
+        .version-label {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2d3436;
+            color: white;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .version-box.before .version-label {
+            background: #f8c9c3;
+            color: #b85450;
+        }
+        
+        .version-box.after .version-label {
+            background: #a8d8bb;
+            color: #82b366;
+        }
+        
+        .system-flow {
+            margin-top: 20px;
+        }
+        
+        .system-item {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            position: relative;
+        }
+        
+        .system-item.connected {
+            background: #e8f5e9;
+            border: 2px solid #81c784;
+            color: #2d3436;
+        }
+        
+        .system-item.disconnected {
+            background: #ffebee;
+            border: 2px dashed #ef9a9a;
+            color: #c62828;
+        }
+        
+        .system-item.core {
+            background: #e3f2fd;
+            border: 2px solid #64b5f6;
+            color: #2d3436;
+        }
+        
+        .service-item {
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .service-item.completed {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .service-item.planned {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+        }
+        
+        .flow-arrow {
+            text-align: center;
+            margin: 5px 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .connection-line {
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .connection-line.connected {
+            color: #4caf50;
+        }
+        
+        .connection-line.disconnected {
+            color: #f44336;
+            text-decoration: line-through;
+        }
+        
+        .legend {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+        }
+        
+        .legend-color.completed {
+            background: #4caf50;
+        }
+        
+        .legend-color.planned {
+            background: #ff9800;
+        }
+        
+        .legend-color.connected {
+            background: #81c784;
+        }
+        
+        .legend-color.disconnected {
+            background: #ef9a9a;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="slide-title">多场景支持</h1>
+    
+    <div class="comparison-container">
+        <div class="version-box before">
+            <div class="version-label">V2版本</div>
+            <h3 style="margin-top: 25px; color: #2d3436; text-align: center;">有限对接能力</h3>
+            
+            <div class="system-flow">
+                <div class="system-item connected">FDDP系统</div>
+                
+                <div class="connection-line connected">能够对接</div>
+                
+                <div class="system-item core">EGIP系统V2</div>
+                
+                <div class="connection-line disconnected">不能对接</div>
+                
+                <div class="system-item disconnected">EGIP系统V1</div>
+            </div>
+            
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                <p style="color: #636e72; font-size: 14px;">
+                    <strong>主要限制：</strong><br>
+                    1. 只能对接FDDP系统<br>
+                    2. 无法向后兼容V1版本<br>
+                    3. 扩展性有限
+                </p>
+            </div>
+        </div>
+        
+        <div class="version-box after">
+            <div class="version-label">V3版本</div>
+            <h3 style="margin-top: 25px; color: #2d3436; text-align: center;">全面微服务化</h3>
+            
+            <div class="system-flow">
+                <div class="system-item connected" style="margin-bottom: 15px;">EGIP系统V2地图</div>
+                <div class="service-item completed">地图微服务<br/>已完成</div>
+                
+                <div class="flow-arrow">↓</div>
+                
+                <div class="system-item connected" style="margin-bottom: 15px;">EGIP多人GIS协作系统</div>
+                <div class="service-item completed">GIS协作微服务<br/>已完成</div>
+                
+                <div class="flow-arrow">↓</div>
+                
+                <div class="system-item connected" style="margin-bottom: 15px;">EngiHub</div>
+                <div class="service-item completed">EngiHub微服务<br/>已完成</div>
+                
+                <div class="flow-arrow">↓</div>
+                
+                <div class="system-item connected" style="margin-bottom: 15px;">UniFiber拓扑&纤芯分配模块</div>
+                <div class="service-item planned">纤芯分配微服务<br/>待开发</div>
+                
+                <div class="flow-arrow" style="margin-top: 20px;">↓</div>
+                
+                <div class="system-item core" style="margin-top: 15px;">EGIP系统V3</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color completed"></div>
+            <span>已完成微服务</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color planned"></div>
+            <span>待开发微服务</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color connected"></div>
+            <span>已连接系统</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color disconnected"></div>
+            <span>无法连接</span>
+        </div>
+    </div>
+    
+    <div style="margin-top: 30px; text-align: center; background: #e8f5e9; padding: 20px; border-radius: 10px; border-left: 5px solid #4caf50;">
+        <h3 style="color: #2d3436; margin-bottom: 10px;">核心改进价值</h3>
+        <p style="color: #636e72;">
+            通过微服务架构，V3版本能够同时支持多种应用场景，<br>
+            实现模块化部署和独立扩展，大幅提升系统灵活性和可维护性
+        </p>
+    </div>
+</body>
+</html>

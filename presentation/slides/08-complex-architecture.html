@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复杂架构支持</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+            min-height: 100vh;
+            padding: 40px 60px;
+        }
+        
+        .slide-title {
+            font-size: 42px;
+            color: #2d3436;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid #667eea;
+            display: inline-block;
+        }
+        
+        .architecture-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .version-box {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .version-box.before {
+            border-top: 5px solid #f8c9c3;
+        }
+        
+        .version-box.after {
+            border-top: 5px solid #a8d8bb;
+        }
+        
+        .version-label {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2d3436;
+            color: white;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .version-box.before .version-label {
+            background: #f8c9c3;
+            color: #b85450;
+        }
+        
+        .version-box.after .version-label {
+            background: #a8d8bb;
+            color: #82b366;
+        }
+        
+        .layer-title {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            margin: 15px 0 10px 0;
+            border-radius: 6px;
+        }
+        
+        .layer.before-external .layer-title {
+            background: #f0f0f0;
+            color: #636e72;
+        }
+        
+        .layer.before-internal .layer-title {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .layer.after-ext .layer-title {
+            background: #f0f7eb;
+            color: #2e7d32;
+        }
+        
+        .layer.after-prof .layer-title {
+            background: #fffde7;
+            color: #f57f17;
+        }
+        
+        .layer.after-cap .layer-title {
+            background: #fce4ec;
+            color: #880e4f;
+        }
+        
+        .layer.after-internal .layer-title {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .system-item {
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 14px;
+            border: 1px solid #eee;
+        }
+        
+        .system-item.light {
+            background: #f8f9fa;
+        }
+        
+        .system-item.medium {
+            background: #e9ecef;
+        }
+        
+        .flow-arrow {
+            text-align: center;
+            margin: 8px 0;
+            color: #667eea;
+            font-size: 18px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        
+        .status-completed {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .status-in-progress {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .status-planned {
+            background: #9e9e9e;
+            color: white;
+        }
+        
+        .architecture-flow {
+            margin-top: 15px;
+        }
+        
+        .architecture-layers {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 5px;
+        }
+        
+        .connection-line {
+            height: 20px;
+            border-left: 2px dashed #ccc;
+            margin: 0 auto;
+            width: 0;
+        }
+        
+        .legend {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+        
+        .legend-color.ext { background: #f0f7eb; border: 1px solid #c8e6c9; }
+        .legend-color.prof { background: #fffde7; border: 1px solid #fff9c4; }
+        .legend-color.cap { background: #fce4ec; border: 1px solid #f8bbd0; }
+        .legend-color.internal { background: #e8f5e9; border: 1px solid #c8e6c9; }
+        .legend-color.completed { background: #4caf50; }
+        .legend-color.in-progress { background: #ff9800; }
+        .legend-color.planned { background: #9e9e9e; }
+        
+        .key-benefits {
+            margin-top: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 25px;
+            border-radius: 12px;
+            color: white;
+        }
+        
+        .key-benefits h3 {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .benefit-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .benefit-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .benefit-item strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="slide-title">复杂架构支持：能力与应用的分离</h1>
+    
+    <div class="architecture-container">
+        <div class="version-box before">
+            <div class="version-label">原架构（V2）</div>
+            <h3 style="margin-top: 20px; color: #2d3436; text-align: center;">紧耦合设计</h3>
+            
+            <div class="architecture-flow">
+                <div class="layer before-external">
+                    <div class="layer-title">外部应用层</div>
+                    <div class="system-item light">EGIP系统V2地图</div>
+                    <div class="system-item light">EGIP多人GIS协作系统</div>
+                </div>
+                
+                <div class="flow-arrow">↓ 直接对接</div>
+                
+                <div class="layer before-internal">
+                    <div class="layer-title">内部应用层</div>
+                    <div class="system-item medium">EGIP系统V2</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                <p style="color: #636e72; font-size: 14px;">
+                    <strong>架���特点：</strong><br>
+                    1. 功能紧耦合，难以独立扩展<br>
+                    2. 复用性差，相同功能需重复开发<br>
+                    3. 维护成本高，修改影响范围广<br>
+                    4. 职责边界不清晰，开发效率低
+                </p>
+            </div>
+        </div>
+        
+        <div class="version-box after">
+            <div class="version-label">新架构（V3）</div>
+            <h3 style="margin-top: 20px; color: #2d3436; text-align: center;">分层解耦设计</h3>
+            
+            <div class="architecture-layers">
+                <!-- 应用定制层 -->
+                <div class="layer after-ext">
+                    <div class="layer-title">应用定制层（客户+PMO）</div>
+                    <div class="system-item light">地图应用</div>
+                    <div class="system-item light">GIS协作应用</div>
+                    <div class="system-item light">EngiHub系统</div>
+                    <div class="system-item light">纤芯分配系统</div>
+                    <div class="system-item light">哑资源系统</div>
+                </div>
+                
+                <div class="connection-line"></div>
+                
+                <!-- 专业层 -->
+                <div class="layer after-prof">
+                    <div class="layer-title">专业层（PMO+PM+Dev）</div>
+                    <div class="system-item medium">EGIP系统V3地图</div>
+                    <div class="system-item medium">GIS协作微服务</div>
+                    <div class="system-item medium">EngiHub微服务</div>
+                    <div class="system-item medium">纤芯分配微服务</div>
+                    <div class="system-item medium">哑资源巡查微服务</div>
+                </div>
+                
+                <div class="connection-line"></div>
+                
+                <!-- 能力层 -->
+                <div class="layer after-cap">
+                    <div class="layer-title">能力层（PM+Dev）</div>
+                    <div class="system-item medium">
+                        EGIP系统V3地图组件
+                        <span class="status-badge status-in-progress">开发中</span>
+                    </div>
+                    <div class="system-item medium">
+                        GIS的冲突合并
+                        <span class="status-badge status-completed">已完成</span>
+                    </div>
+                    <div class="system-item medium">
+                        GIS检查
+                        <span class="status-badge status-completed">已完成</span>
+                    </div>
+                    <div class="system-item medium">
+                        GIS计算
+                        <span class="status-badge status-planned">待开发</span>
+                    </div>
+                    <div class="system-item medium">
+                        GIS图层生成
+                        <span class="status-badge status-planned">待开发</span>
+                    </div>
+                    <div class="system-item medium">
+                        GIS路线计算
+                        <span class="status-badge status-planned">待开发</span>
+                    </div>
+                </div>
+                
+                <div class="connection-line"></div>
+                
+                <!-- 内部应用层 -->
+                <div class="layer after-internal">
+                    <div class="layer-title">内部应用层（数字技术部架构+Dev）</div>
+                    <div class="system-item medium">GIS服务（QGIS，后续扩展）</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color ext"></div>
+            <span>应用定制层</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color prof"></div>
+            <span>专业层</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color cap"></div>
+            <span>能力层</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color internal"></div>
+            <span>内部应用层</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color completed"></div>
+            <span>已完成</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color in-progress"></div>
+            <span>开发中</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color planned"></div>
+            <span>待开发</span>
+        </div>
+    </div>
+    
+    <div class="key-benefits">
+        <h3>架构分层解耦的核心价值</h3>
+        <div class="benefit-grid">
+            <div class="benefit-item">
+                <strong>职责分离</strong>
+                不同角色关注不同层次，明确职责边界
+            </div>
+            <div class="benefit-item">
+                <strong>能力复用</strong>
+                底层能力可被多个上层应用复用
+            </div>
+            <div class="benefit-item">
+                <strong>独立演进</strong>
+                各层可独立升级演进，降低升级风险
+            </div>
+            <div class="benefit-item">
+                <strong>扩展灵活</strong>
+                新应用可快速基于现有能力构建
+            </div>
+        </div>
+    </div>
+</body>
+</html>
